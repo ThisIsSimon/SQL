@@ -1,0 +1,19 @@
+
+
+;WITH cte1 AS
+(
+	SELECT DueDate = CASE WHEN LEFT(CONVERT(varchar(8), upload_date, 108), 2) >= 12 THEN dateadd(day, 3, upload_date)
+						            WHEN LEFT(CONVERT(varchar(8), upload_date, 108), 2) < 12 THEN dateadd(day, 2, upload_date)
+						            ELSE NULL
+					         END
+				 ,id
+	FROM table1
+)
+
+UPDATE table1
+SET Target_Date = CASE WHEN DATEPART(dw, DueDate) = 7 THEN dateadd(day, 2, DueDate)
+					             WHEN DATEPART(dw, DueDate) = 1 THEN dateadd(day, 1, DueDate)
+					             ELSE DueDate
+				          END
+FROM cte1
+INNER JOIN table1 ON cte1.id = table1.id
