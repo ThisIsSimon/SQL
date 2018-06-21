@@ -17,10 +17,10 @@ else keep its' original due date
 ;WITH cte1 AS
 (
 	SELECT DueDate = CASE WHEN LEFT(CONVERT(varchar(8), upload_date, 108), 2) >= 12 THEN dateadd(day, 3, upload_date)
-						            WHEN LEFT(CONVERT(varchar(8), upload_date, 108), 2) < 12 THEN dateadd(day, 2, upload_date)
-						            ELSE NULL
-					         END
-				 ,id
+		              WHEN LEFT(CONVERT(varchar(8), upload_date, 108), 2) < 12 THEN dateadd(day, 2, upload_date)
+			      ELSE NULL
+			 END
+			 ,id
 	FROM table1
 )
 
